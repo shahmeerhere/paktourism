@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { useParams } from "next/navigation"
+import Image from "next/image" 
 
 const cityHotels = {
     "lahore": [
@@ -270,239 +271,244 @@ const cityInfo = {
 
 
 export default function CityPage() {
-    const params = useParams()
-    const cityName = params.cityName
-    const hotels = cityHotels[cityName] || []
-    const city = cityInfo[cityName]
+  const params = useParams()
+  const cityName = params.cityName
+  const hotels = cityHotels[cityName] || []
+  const city = cityInfo[cityName]
 
-    const [showForm, setShowForm] = useState(false)
-    const [selectedHotel, setSelectedHotel] = useState(null)
-    const [formData, setFormData] = useState({ name: "", email: "", days: 1 })
-    const [bookingInfo, setBookingInfo] = useState(null)
+  const [showForm, setShowForm] = useState(false)
+  const [selectedHotel, setSelectedHotel] = useState(null)
+  const [formData, setFormData] = useState({ name: "", email: "", days: 1 })
+  const [bookingInfo, setBookingInfo] = useState(null)
 
-    const handleClick = (hotel) => {
-        setSelectedHotel(hotel)
-        setShowForm(true)
-    }
+  const handleClick = (hotel) => {
+    setSelectedHotel(hotel)
+    setShowForm(true)
+  }
 
-    const handleClose = () => {
-        setShowForm(false)
-        setSelectedHotel(null)
-        setFormData({ name: "", email: "", days: 1 })
-    }
+  const handleClose = () => {
+    setShowForm(false)
+    setSelectedHotel(null)
+    setFormData({ name: "", email: "", days: 1 })
+  }
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
-    }
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        // Generate a random check-in date within the next 30 days
-        const today = new Date()
-        const randomOffset = Math.floor(Math.random() * 30)
-        const checkInDate = new Date(today.setDate(today.getDate() + randomOffset))
-        const formattedDate = checkInDate.toDateString()
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const today = new Date()
+    const randomOffset = Math.floor(Math.random() * 30)
+    const checkInDate = new Date(today.setDate(today.getDate() + randomOffset))
+    const formattedDate = checkInDate.toDateString()
 
-        setBookingInfo({
-            hotel: selectedHotel,
-            name: formData.name,
-            email: formData.email,
-            days: formData.days,
-            checkIn: formattedDate
-        })
+    setBookingInfo({
+      hotel: selectedHotel,
+      name: formData.name,
+      email: formData.email,
+      days: formData.days,
+      checkIn: formattedDate
+    })
 
-        handleClose()
-    }
+    handleClose()
+  }
 
-    if (!city) {
-        return (
-            <div className="min-h-screen bg-white flex items-center justify-center">
-                <div className="text-center">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">City Not Found</h1>
-                    <p className="text-gray-600 mb-8">The city you're looking for doesn't exist.</p>
-                    <Link href="/" className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700">
-                        Back to Home
-                    </Link>
-                </div>
-            </div>
-        )
-    }
-
+  if (!city) {
     return (
-        <div className="min-h-screen bg-white relative">
-            {/* Hero Section */}
-            <div
-                className="h-64 bg-cover bg-center flex items-center justify-center"
-                style={{ backgroundImage: `url(${city.image})` }}
-            >
-                <h1 className="text-4xl md:text-5xl font-bold text-green-600 bg-white/60 px-4 py-2 rounded">
-                    {city.name}
-                </h1>
-            </div>
-
-            {/* Hotels Section */}
-            <section className="py-20 container mx-auto px-6 relative z-0">
-                <div className="text-center mb-12">
-                    <h2 className="text-4xl font-bold text-green-600 mb-4">Hotels in {city.name}</h2>
-                    <p className="text-gray-800 text-lg">{city.description}</p>
-                </div>
-
-                {hotels.length > 0 ? (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {hotels.map((hotel) => (
-                            <motion.div
-                                key={hotel.id}
-                                whileHover={{ scale: 1.02 }}
-                                className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100"
-                            >
-                                <img
-                                    src={hotel.image}
-                                    alt={hotel.name}
-                                    className="w-full h-48 object-cover"
-                                />
-                                <div className="p-6">
-                                    <div className="flex justify-between items-start mb-3">
-                                        <h3 className="text-xl font-semibold text-green-800">{hotel.name}</h3>
-                                        <div className="flex items-center">
-                                            <span className="text-yellow-500">★</span>
-                                            <span className="ml-1 text-gray-600">{hotel.rating}</span>
-                                        </div>
-                                    </div>
-
-                                    <p className="text-gray-700 mb-4 text-sm">{hotel.description}</p>
-
-                                    <div className="flex flex-wrap gap-2 mb-4">
-                                        {hotel.amenities.map((amenity, index) => (
-                                            <span
-                                                key={index}
-                                                className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full"
-                                            >
-                                                {amenity}
-                                            </span>
-                                        ))}
-                                    </div>
-
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-2xl font-bold text-green-600">{hotel.price}</span>
-                                        <button
-                                            onClick={() => handleClick(hotel)}
-                                            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
-                                        >
-                                            Book Now
-                                        </button>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="text-center py-12">
-                        <p className="text-gray-600 text-lg">No hotels available for this city yet.</p>
-                    </div>
-                )}
-
-                {/* Back to Destinations Button */}
-                <div className="text-center mt-12">
-                    <Link
-                        href="/"
-                        className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
-                    >
-                        ← Back to Destinations
-                    </Link>
-                </div>
-            </section>
-
-            {/* Booking Card Side Panel */}
-            <AnimatePresence>
-                {bookingInfo && (
-                    <motion.div
-                        initial={{ x: "100%", opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: "100%", opacity: 0 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className="fixed top-20 right-10 w-80 bg-white border border-gray-200 rounded-2xl shadow-xl p-6 z-50"
-                    >
-                        <h2 className="text-2xl font-bold text-green-700 mb-2">{bookingInfo.hotel.name}</h2>
-                        <p className="text-green-800 mb-1"><strong>Name:</strong> {bookingInfo.name}</p>
-                        <p className="text-green-800 mb-1"><strong>Email:</strong> {bookingInfo.email}</p>
-                        <p className="text-green-800 mb-1"><strong>Days:</strong> {bookingInfo.days}</p>
-                        <p className="text-green-800 mb-3"><strong>Check-in:</strong> {bookingInfo.checkIn}</p>
-                        <button
-                            onClick={() => setBookingInfo(null)}
-                            className="mt-2 w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-                        >
-                            Close
-                        </button>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            {/* Booking Form Modal */}
-            <AnimatePresence>
-                {showForm && (
-                    <motion.div
-                        className="fixed inset-0 bg-black/50 flex items-center justify-center z-40"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                    >
-                        <div className="bg-white rounded-2xl p-8 w-full max-w-md relative">
-                            <h2 className="text-2xl font-bold mb-4 text-green-700">Book {selectedHotel?.name}</h2>
-                            <form onSubmit={handleSubmit} className="space-y-4">
-                                <div>
-                                    <label className="block text-green-800">Name</label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full border text-black border-gray-300 rounded-lg px-3 py-2 mt-1"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-green-800">Email</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full text-black border border-gray-300 rounded-lg px-3 py-2 mt-1"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-green-800">Number of Days</label>
-                                    <input
-                                        type="number"
-                                        name="days"
-                                        min="1"
-                                        value={formData.days}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full border text-black border-gray-300 rounded-lg px-3 py-2 mt-1"
-                                    />
-                                </div>
-                                <div className="flex justify-end gap-2">
-                                    <button
-                                        type="button"
-                                        onClick={handleClose}
-                                        className="px-4 py-2 rounded-lg border text-green-600 border-gray-300 hover:bg-gray-100"
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
-                                    >
-                                        Confirm Booking
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">City Not Found</h1>
+          <p className="text-gray-600 mb-8">The city you&apos;re looking for doesn&apos;t exist.</p>
+          <Link
+            href="/"
+            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
+          >
+            Back to Home
+          </Link>
         </div>
+      </div>
     )
+  }
+
+  return (
+    <div className="min-h-screen bg-white relative">
+      {/* Hero Section */}
+      <div
+        className="h-64 bg-cover bg-center flex items-center justify-center"
+        style={{ backgroundImage: `url(${city.image})` }}
+      >
+        <h1 className="text-4xl md:text-5xl font-bold text-green-600 bg-white/60 px-4 py-2 rounded">
+          {city.name}
+        </h1>
+      </div>
+
+      {/* Hotels Section */}
+      <section className="py-20 container mx-auto px-6 relative z-0">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-green-600 mb-4">Hotels in {city.name}</h2>
+          <p className="text-gray-800 text-lg">{city.description}</p>
+        </div>
+
+        {hotels.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {hotels.map((hotel) => (
+              <motion.div
+                key={hotel.id}
+                whileHover={{ scale: 1.02 }}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100"
+              >
+                <Image
+                  src={hotel.image}
+                  alt={hotel.name}
+                  width={500}
+                  height={300}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-xl font-semibold text-green-800">{hotel.name}</h3>
+                    <div className="flex items-center">
+                      <span className="text-yellow-500">★</span>
+                      <span className="ml-1 text-gray-600">{hotel.rating}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-gray-700 mb-4 text-sm">{hotel.description}</p>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {hotel.amenities.map((amenity, index) => (
+                      <span
+                        key={index}
+                        className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full"
+                      >
+                        {amenity}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex justify-between items-center">
+                    <span className="text-2xl font-bold text-green-600">{hotel.price}</span>
+                    <button
+                      onClick={() => handleClick(hotel)}
+                      className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                    >
+                      Book Now
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-gray-600 text-lg">No hotels available for this city yet.</p>
+          </div>
+        )}
+
+        <div className="text-center mt-12">
+          <Link
+            href="/"
+            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
+          >
+            ← Back to Destinations
+          </Link>
+        </div>
+      </section>
+
+      {/* Booking Card Side Panel */}
+      <AnimatePresence>
+        {bookingInfo && (
+          <motion.div
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "100%", opacity: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="fixed top-20 right-10 w-80 bg-white border border-gray-200 rounded-2xl shadow-xl p-6 z-50"
+          >
+            <h2 className="text-2xl font-bold text-green-700 mb-2">{bookingInfo.hotel.name}</h2>
+            <p className="text-green-800 mb-1"><strong>Name:</strong> {bookingInfo.name}</p>
+            <p className="text-green-800 mb-1"><strong>Email:</strong> {bookingInfo.email}</p>
+            <p className="text-green-800 mb-1"><strong>Days:</strong> {bookingInfo.days}</p>
+            <p className="text-green-800 mb-3"><strong>Check-in:</strong> {bookingInfo.checkIn}</p>
+            <button
+              onClick={() => setBookingInfo(null)}
+              className="mt-2 w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+            >
+              Close
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Booking Form Modal */}
+      <AnimatePresence>
+        {showForm && (
+          <motion.div
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="bg-white rounded-2xl p-8 w-full max-w-md relative">
+              <h2 className="text-2xl font-bold mb-4 text-green-700">
+                Book {selectedHotel?.name}
+              </h2>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-green-800">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full border text-black border-gray-300 rounded-lg px-3 py-2 mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="block text-green-800">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full text-black border border-gray-300 rounded-lg px-3 py-2 mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="block text-green-800">Number of Days</label>
+                  <input
+                    type="number"
+                    name="days"
+                    min="1"
+                    value={formData.days}
+                    onChange={handleChange}
+                    required
+                    className="w-full border text-black border-gray-300 rounded-lg px-3 py-2 mt-1"
+                  />
+                </div>
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={handleClose}
+                    className="px-4 py-2 rounded-lg border text-green-600 border-gray-300 hover:bg-gray-100"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
+                  >
+                    Confirm Booking
+                  </button>
+                </div>
+              </form>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
 }
