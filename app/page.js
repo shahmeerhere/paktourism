@@ -19,7 +19,7 @@ export default function HomePage() {
             Discover Pakistan
           </h1>
 
-          <nav className="hidden md:flex space-x-6 text-white font-bold">
+          <nav className="hidden md:flex space-x-6 text-white font-bold position-sticky">
             <Link href="#destinations" className="hover:text-green-600">Destinations</Link>
             <Link href="#culture" className="hover:text-green-600">Culture</Link>
             <Link href="#gallery" className="hover:text-green-600">Gallery</Link>
