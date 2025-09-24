@@ -2,25 +2,45 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import Image from "next/image" // ✅ Import Next.js Image
+import Image from "next/image"
+import { Menu, X } from "lucide-react"
 
 export default function HomePage() {
   const [email, setEmail] = useState("")
+  const [open, setOpen] = useState(false)
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      {/* Hero Section */}
       <section className="relative h-screen bg-[url('/hero.jpg')] bg-cover bg-center">
         <div className="absolute inset-0 bg-black/50"></div>
 
         <header className="relative z-10 flex justify-between items-center p-6">
-          <h1 className="text-green-600 font-bold text-2xl">Discover Pakistan</h1>
-          <nav className="space-x-6 text-white">
-            <Link href="#destinations" className="hover:text-green-600 font-bold">Destinations</Link>
-            <Link href="#culture" className="hover:text-green-600 font-bold">Culture</Link>
-            <Link href="#gallery" className="hover:text-green-600 font-bold">Gallery</Link>
-            <Link href="#contact" className="hover:text-green-600 font-bold">Contact</Link>
+          <h1 className="text-green-600 font-bold text-2xl whitespace-nowrap">
+            Discover Pakistan
+          </h1>
+
+          <nav className="hidden md:flex space-x-6 text-white font-bold">
+            <Link href="#destinations" className="hover:text-green-600">Destinations</Link>
+            <Link href="#culture" className="hover:text-green-600">Culture</Link>
+            <Link href="#gallery" className="hover:text-green-600">Gallery</Link>
+            <Link href="#contact" className="hover:text-green-600">Contact</Link>
           </nav>
+
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden text-white"
+          >
+            {open ? <X size={28} /> : <Menu size={28} />}
+          </button>
+
+          {open && (
+            <div className="absolute top-full right-0 bg-black w-full flex flex-col items-center py-4 space-y-4 md:hidden text-white font-bold shadow-lg">
+              <Link href="#destinations" className="hover:text-green-600" onClick={() => setOpen(false)}>Destinations</Link>
+              <Link href="#culture" className="hover:text-green-600" onClick={() => setOpen(false)}>Culture</Link>
+              <Link href="#gallery" className="hover:text-green-600" onClick={() => setOpen(false)}>Gallery</Link>
+              <Link href="#contact" className="hover:text-green-600" onClick={() => setOpen(false)}>Contact</Link>
+            </div>
+          )}
         </header>
 
         <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
