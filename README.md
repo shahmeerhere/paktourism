@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🌄 PakTour – Explore Pakistan Like Never Before
 
-## Getting Started
+**PakTour** is a modern, responsive **web application** designed to showcase the beauty of Pakistan’s landscapes, culture, and heritage.  
+Built with **Next.js**, **React**, and **TailwindCSS**, it offers a seamless experience for discovering popular destinations, viewing essential travel info, and exploring Pakistan’s rich tourism potential.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- 🗺️ Explore top tourist destinations across Pakistan  
+- 📍 Get detailed info about cities, landmarks, and attractions  
+- 🖼️ High-quality visuals for each location  
+- 📱 Fully responsive — works on mobile, tablet, and desktop  
+- ⚡ Optimized performance via Next.js  
+- 🎨 Minimal, aesthetic UI using TailwindCSS  
+
+---
+
+## 🛠️ Tech Stack
+
+| Framework | Styling     | Libraries / Tools | Deployment |
+| ---------- | ------------ | ---------------- | ----------- |
+| Next.js    | TailwindCSS  | React Hooks       | Vercel |
+| React      | -            | -                 | - |
+
+---
+
+## ⚙️ Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/shahmeerhere/paktour.git
+
+# Navigate to the project folder
+cd paktour
+
+# Install dependencies
+npm install
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+````
+
+Now open **[http://localhost:3000](http://localhost:3000)** to view it live.
+
+---
+
+## 🖱️ Usage
+
+1. Open the app and browse Pakistan’s regions.
+2. Select a destination (e.g., Hunza, Skardu, Lahore, Gwadar).
+3. View its weather, travel highlights, and best visiting times.
+4. Navigate smoothly with the clean and adaptive interface.
+
+---
+
+## 🧠 Logic Overview
+
+For each location, data is dynamically fetched and displayed with structured information blocks such as:
+
+```
+For each region:
+    Display destination cards with title and image
+    On click, show details about:
+        - Attractions
+        - Travel time
+        - Climate
+        - Best season to visit
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🌟 Future Enhancements
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* 🧭 Interactive map with location filtering
+* 🏨 Hotel and restaurant integration
+* 🚌 AI-based itinerary planner
+* 💬 User reviews and feedback section
+* 🕹️ Virtual 360° experience
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📂 Folder Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+paktour/
+├─ pages/
+├─ components/
+├─ public/
+├─ styles/
+├─ data/
+├─ package.json
+└─ README.md
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📫 Contact
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**👨‍💻 Developer:** Shahmeer Shahid
+**🌐 Portfolio:** [https://shahmeershahid.vercel.app](https://shahmeershahid.vercel.app)
+**💼 LinkedIn:** [https://linkedin.com/in/shahmeershahid](https://linkedin.com/in/shahmeershahid)
+**📧 Email:** [shahmeerhere@gmail.com](mailto:shahmeerhere@gmail.com)
+**🐙 GitHub:** [https://github.com/shahmeerhere](https://github.com/shahmeerhere)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## ⚖️ License
+
+This project is licensed under the **MIT License** — you’re free to use, modify, and distribute it with credit.
+
+---
+
+**Built with 🇵🇰 passion using Next.js, React, and TailwindCSS**
+
+```
