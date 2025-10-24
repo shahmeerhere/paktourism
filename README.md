@@ -113,4 +113,3 @@ This project is licensed under the **MIT License** — you’re free to use, mod
 
 **Built with 🇵🇰 passion using Next.js, React, and TailwindCSS**
 
-```
